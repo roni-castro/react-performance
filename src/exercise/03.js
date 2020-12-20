@@ -56,7 +56,33 @@ function ListItem({
     />
   )
 }
-ListItem = React.memo(ListItem)
+ListItem = React.memo(ListItem, (prevProps, nextProps) => {
+  // true means do NOT rerender
+  // false means DO rerender
+
+  if (
+    nextProps.getItemProps !== prevProps.getItemProps ||
+    nextProps.selectedItem !== prevProps.selectedItem ||
+    nextProps.item !== prevProps.item ||
+    nextProps.index !== prevProps.index
+  ) {
+    return false
+  }
+
+  // was highlighted, and is being unhighlighted
+  if (
+    prevProps.highlightedIndex === prevProps.index &&
+    nextProps.highlightedIndex !== nextProps.index
+  ) {
+    return false
+  }
+
+  // is highlighted
+  if (nextProps.highlightedIndex === nextProps.index) {
+    return false
+  }
+  return true
+})
 
 function App() {
   const forceRerender = useForceRerender()
