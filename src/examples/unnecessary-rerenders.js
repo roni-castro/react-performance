@@ -1,3 +1,4 @@
+/* eslint-disable no-func-assign */
 // http://localhost:3000/isolated/examples/unnecessary-rerenders.js
 
 import * as React from 'react'
