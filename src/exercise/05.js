@@ -39,11 +39,10 @@ function AppProvider({children}) {
     dogName: '',
     grid: initialGrid,
   })
-  const valueState = React.useMemo(() => [state], [state])
-  const valueDispatch = React.useMemo(() => [dispatch], [dispatch])
+
   return (
-    <AppStateContext.Provider value={valueState}>
-      <AppDispatchContext.Provider value={valueDispatch}>
+    <AppStateContext.Provider value={state}>
+      <AppDispatchContext.Provider value={dispatch}>
         {children}
       </AppDispatchContext.Provider>
     </AppStateContext.Provider>
@@ -67,7 +66,7 @@ function useAppDispatch() {
 }
 
 function Grid() {
-  const [dispatch] = useAppDispatch()
+  const dispatch = useAppDispatch()
   const [rows, setRows] = useDebouncedState(50)
   const [columns, setColumns] = useDebouncedState(50)
   const updateGridData = React.useCallback(
@@ -88,8 +87,8 @@ function Grid() {
 Grid = React.memo(Grid)
 
 function Cell({row, column}) {
-  const [state] = useAppState()
-  const [dispatch] = useAppDispatch()
+  const state = useAppState()
+  const dispatch = useAppDispatch()
   const cell = state.grid[row][column]
   const handleClick = () => dispatch({type: 'UPDATE_GRID_CELL', row, column})
   return (
@@ -108,8 +107,8 @@ function Cell({row, column}) {
 Cell = React.memo(Cell)
 
 function DogNameInput() {
-  const [state] = useAppState()
-  const [dispatch] = useAppDispatch()
+  const state = useAppState()
+  const dispatch = useAppDispatch()
   const {dogName} = state
 
   function handleChange(event) {
