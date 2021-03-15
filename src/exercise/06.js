@@ -107,16 +107,13 @@ Grid = React.memo(Grid)
 function Cell({row, column}) {
   const state = useAppState()
   const cell = state.grid[row][column]
-  return <CellImp cell={cell} row={row} column={column} />
+  return <CellImpl cell={cell} row={row} column={column} />
 }
 Cell = React.memo(Cell)
 
-function CellImp({cell, row, column}) {
+function CellImpl({cell, row, column}) {
   const dispatch = useAppDispatch()
-  const handleClick = React.useCallback(
-    () => dispatch({type: 'UPDATE_GRID_CELL', row, column}),
-    [dispatch, row, column],
-  )
+  const handleClick = () => dispatch({type: 'UPDATE_GRID_CELL', row, column})
   return (
     <button
       className="cell"
@@ -130,7 +127,7 @@ function CellImp({cell, row, column}) {
     </button>
   )
 }
-CellImp = React.memo(CellImp)
+CellImpl = React.memo(CellImpl)
 
 function DogNameInput() {
   const [state, dispatch] = useDogState()
